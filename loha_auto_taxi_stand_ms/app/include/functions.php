@@ -95,12 +95,13 @@ if(isset($_POST['update_user_profile']))
     $id = $_REQUEST['user_id'];
     $first_name = $_REQUEST['first_name'];
     $last_name = $_REQUEST['last_name'];
+    $username = $_REQUEST['username'];
     $email = $_REQUEST['email_address'];
     $password = $_REQUEST['password'];
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql_update_user_profile = mysqli_prepare($db_connection, "UPDATE users SET `first_name` = '$first_name', `last_name` = '$last_name', `email_address` = '$email', `password` = '$hashed_password' WHERE id = '$id' ");
+    $sql_update_user_profile = mysqli_prepare($db_connection, "UPDATE users SET `first_name` = '$first_name', `last_name` = '$last_name', `username`='$username', `email_address` = '$email', `password` = '$hashed_password' WHERE id = '$id' ");
     mysqli_stmt_execute($sql_update_user_profile) or die(mysqli_stmt_error($sql_update_user_profile));
     logout_user();
 }

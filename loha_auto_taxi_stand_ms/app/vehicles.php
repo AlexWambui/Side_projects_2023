@@ -11,7 +11,7 @@ if (isset($_POST['save_vehicle_details'])) save_vehicle_details();
 </head>
 <body>
 <?php include_once "include/navbar.php" ?>
-<main class="container-fluid">
+<main class="container-fluid Vehicles">
     <div class="row justify-content-center">
         <div class="col-10 mt-2">
             <?= alert() ?>
@@ -108,6 +108,7 @@ if (isset($_POST['save_vehicle_details'])) save_vehicle_details();
             </div>
         </div>
     </div>
+    
 </main>
 <script src="../assets/js/jquery.dataTables.min.js"></script>
 <script src="../assets/js/data_table.js"></script>

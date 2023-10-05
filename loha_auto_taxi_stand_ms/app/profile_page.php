@@ -31,10 +31,22 @@ protect_page();
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email_address">Email Address</label>
-                                <input type="email" name="email_address" id="email_address" placeholder="Email Address" class="form-control" required value="<?= $user['email_address'] ?>">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" name="username" id="username" placeholder="Username" class="form-control" value="<?= $user['username'] ?>">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="email_address">Email Address</label>
+                                        <input type="email" name="email_address" id="email_address" placeholder="Email Address" class="form-control" required value="<?= $user['email_address'] ?>">
+                                    </div>
+                                </div>
                             </div>
+                            
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password" class="form-control" placeholder="New password">

@@ -132,6 +132,14 @@ header {
 }
 
 .Dashboard {
+  height: 92vh;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('../images/system_images/pexels-jake-heinemann-2399254.jpg');
+  background-size: cover;
+
+  h3 {
+    color: #fff;
+  }
+
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -162,7 +170,29 @@ header {
         text-transform: uppercase;
       }
     }
+
+    .stat:nth-of-type(2) {
+      background: black;
+      color: white;
+    }
+
+    .stat:nth-of-type(3) {
+      background: purple;
+      color: #fff;
+    }
+
+    .stat:nth-of-type(4) {
+      background: pink;
+    }
   }
+}
+
+.Vehicles {
+  height: 92vh;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0, .5)), url('../images/system_images/tuktuk_vehicles.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .Receipt {

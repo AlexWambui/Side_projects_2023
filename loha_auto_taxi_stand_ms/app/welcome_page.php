@@ -12,7 +12,7 @@ protect_page();
 <?php include_once "include/navbar.php" ?>
 <main class="Dashboard">
     <div class="container">
-        <h3 class="mt-4">Hi <?= $_SESSION['first_name'] ?></h3>
+        <h3 class="pt-4">Hi <?= $_SESSION['first_name'] ?></h3>
         <div class="stats mt-4">
             <div class="stat">
                 <span class="icon icon-cab"></span>
