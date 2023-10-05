@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2021 at 12:41 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Oct 05, 2023 at 05:05 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_ngong_stage_system`
+-- Database: `db_loha_auto_taxi_ms`
 --
 
 -- --------------------------------------------------------
@@ -31,19 +31,21 @@ CREATE TABLE `users` (
   `id` int(6) NOT NULL,
   `first_name` varchar(70) NOT NULL,
   `last_name` varchar(70) NOT NULL,
+  `username` varchar(80) NOT NULL,
   `email_address` varchar(70) NOT NULL,
   `password` varchar(200) NOT NULL,
   `user_level` int(11) NOT NULL DEFAULT 1,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email_address`, `password`, `user_level`, `date_created`) VALUES
-(1, 'Alexander', 'Dunlap', 'user_test@gmail.com', 'user', 1, '2021-09-27 08:31:03'),
-(2, 'Caldwell', 'Sellers', 'edu@gmail.com', '1234', 1, '2021-09-30 14:34:06');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `email_address`, `password`, `user_level`, `date_created`) VALUES
+(1, 'Admin', 'administrator', 'admin', 'admin@gmail.com', '$2y$10$bcd/xvG4SgvuqbfA4J8WvOesGCGd5JLua5E3wd1NxYuLcOQcXIQtW', 1, '2023-10-04 19:08:37'),
+(2, 'admin', 'administrator1', 'testadmin', 'admin@gmail.com', '$2y$10$qT.WyObtKCbieaAxBs5H0.wM9MsT1aTvZgJYQCzAOsRQBlMIF6JwK', 1, '2023-10-04 19:17:44'),
+(3, 'Alex', 'Aaqil', 'aaqil', 'aaqil@gmail.com', '$2y$10$qT.WyObtKCbieaAxBs5H0.wM9MsT1aTvZgJYQCzAOsRQBlMIF6JwK', 1, '2023-10-04 22:02:50');
 
 -- --------------------------------------------------------
 
@@ -58,19 +60,14 @@ CREATE TABLE `vehicles` (
   `departure_time` time NOT NULL,
   `date_today` date NOT NULL DEFAULT current_timestamp(),
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicles`
 --
 
 INSERT INTO `vehicles` (`id`, `registration_number`, `arrival_time`, `departure_time`, `date_today`, `date_created`) VALUES
-(1, 'KDA 554E', '10:30:00', '11:02:00', '2021-09-28', '2021-09-27 10:57:05'),
-(3, 'KCB 132A', '16:20:00', '16:25:00', '2021-09-27', '2021-09-28 06:05:47'),
-(4, 'KBB 342F', '12:21:00', '12:23:00', '2021-09-27', '2021-09-28 06:18:19'),
-(5, 'KAX 554Y', '15:18:00', '15:22:00', '2021-09-28', '2021-09-28 08:13:22'),
-(6, 'KXY 433T', '18:11:00', '19:10:00', '2021-09-28', '2021-09-28 11:09:02'),
-(7, 'KDA 776D', '17:36:00', '18:00:00', '2021-09-30', '2021-09-30 14:36:31');
+(1, 'KBC 404B', '05:10:00', '06:10:00', '2023-10-05', '2023-10-04 21:10:41');
 
 --
 -- Indexes for dumped tables
@@ -96,13 +93,13 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
