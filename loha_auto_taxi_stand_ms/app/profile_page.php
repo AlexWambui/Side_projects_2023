@@ -46,13 +46,28 @@ protect_page();
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="New password">
-                            </div>
+
                             <div class="form-group text-center">
                                 <button type="submit" name="update_user_profile" id="update_user_profile" class="btn btn-success">Update</button>
+                            </div>
+                        </form>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <div class="card mt-5">
+                <h5 class="card-header text-center">Update Password</h5>
+                <div class="card-body">
+                    <?php foreach (fetch_user_profile() as $user): ?>
+                        <form action="include/functions.php" method="post">
+                            <input type="hidden" name="user_id" id="user_id" value="<?= $user['id'] ?>">
+                            <div class="form-group">
+                                <label for="password">New Password</label>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" name="update_password" id="update_password" class="btn btn-success">Update Password</button>
                             </div>
                         </form>
                     <?php endforeach; ?>
