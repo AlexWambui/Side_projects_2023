@@ -5,4 +5,4 @@ started on: Wed 04-10-2023
 
 Ended On: Thur 05-10-2023
 
-Sold at $ on 05-10-2023
+Sold at $ on 31-10-2023
