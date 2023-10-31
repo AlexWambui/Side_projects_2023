@@ -8,9 +8,6 @@
             <?php if($_SESSION['user_level'] == 3): ?>
                 <a href="users.php">Users</a>
             <?php endif; ?>
-            <?php if($_SESSION['user_level'] != 3): ?>
-            <a href="profile.php">Profile</a>
-            <?php endif; ?>
             <a href="jobs.php">Jobs</a>
             <?php if($_SESSION['user_level'] != 3): ?>
             <a href="job_applications.php">Applications</a>

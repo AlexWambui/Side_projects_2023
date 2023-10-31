@@ -7,6 +7,8 @@ $database = "db_housemaid_portal";
 $db_connection = mysqli_connect($hostname, $username, $password, $database)
 or die("<b>Connection to the server couldn't be established. Try starting mysql on Xampp or contact the developer for help!</b>");
 
+
+// General Functions
 function protect_page()
 {
     session_start();
@@ -33,7 +35,32 @@ function alert()
     </div>
 <?php endif;
 }
+function fetch_all($table_name): mysqli_result|bool
+{
+    global $db_connection;
+    $sql_fetch_all = $db_connection->query("SELECT * FROM $table_name") or die(mysqli_error($db_connection));
+    return $sql_fetch_all;
+}
+function count_all($table_name): int
+{
+    return mysqli_num_rows(fetch_all($table_name));
+}
+function fetch_this_row($table_name): mysqli_result|bool
+{
+    global $db_connection;
+    $update_id = $_REQUEST['update_id'];
+    return $db_connection->query("SELECT * FROM $table_name WHERE id = '$update_id' ");
+}
+function delete($table_name)
+{
+    global $db_connection;
+    $delete_id = $_REQUEST['delete_id'];
+    $sql_delete = mysqli_prepare($db_connection, "DELETE FROM $table_name WHERE id = '$delete_id' ");
+    mysqli_stmt_execute($sql_delete) or die(mysqli_stmt_error($sql_delete));
+}
 
+
+// User Related Functions
 function signup_user()
 {
     global $db_connection;
@@ -89,13 +116,6 @@ function greet_user(): string
 {
     return 'Hi ' . $_SESSION['first_name'];
 }
-
-function fetch_all($table_name): mysqli_result|bool
-{
-    global $db_connection;
-    $sql_fetch_all = $db_connection->query("SELECT * FROM $table_name") or die(mysqli_error($db_connection));
-    return $sql_fetch_all;
-}
 function fetch_user_session($table_name): mysqli_result|bool
 {
     global $db_connection;
@@ -103,25 +123,7 @@ function fetch_user_session($table_name): mysqli_result|bool
     $sql_fetch_where = $db_connection->query("SELECT * FROM $table_name WHERE id = '$id' ") or die(mysqli_error($db_connection));
     return $sql_fetch_where;
 }
-function count_all($table_name): int
-{
-    return mysqli_num_rows(fetch_all($table_name));
-}
-function fetch_this_row($table_name): mysqli_result|bool
-{
-    global $db_connection;
-    $update_id = $_REQUEST['update_id'];
-    return $db_connection->query("SELECT * FROM $table_name WHERE id = '$update_id' ");
-}
-function delete($table_name)
-{
-    global $db_connection;
-    $delete_id = $_REQUEST['delete_id'];
-    $sql_delete = mysqli_prepare($db_connection, "DELETE FROM $table_name WHERE id = '$delete_id' ");
-    mysqli_stmt_execute($sql_delete) or die(mysqli_stmt_error($sql_delete));
-}
-
-function update_profile()
+function update_basic_information()
 {
     global $db_connection;
 
@@ -130,14 +132,26 @@ function update_profile()
     $last_name = $_REQUEST['last_name'];
     $phone = $_REQUEST['phone_number'];
     $email = $_REQUEST['email_address'];
+    $password = $_REQUEST['password'];
     $residence = $_REQUEST['residence'];
+
+    $sql_query = mysqli_prepare($db_connection, "UPDATE users SET `first_name` = '$first_name', `last_name` = '$last_name', `phone_number` = '$phone', `email_address` = '$email', `password` = '$password', `residence` = '$residence' WHERE id = '$id' ");
+    mysqli_stmt_execute($sql_query) or die(mysqli_stmt_error($sql_query));
+    setcookie('success', 'Profile updated successfully!', time() + 2);
+    logout();
+}
+function update_profile()
+{
+    global $db_connection;
+
+    $id = $_SESSION['id'];
     $skills = $_REQUEST['skills'];
     $bio = $_REQUEST['bio'];
 
-    $sql_update_profile = mysqli_prepare($db_connection, "UPDATE users SET `first_name` = '$first_name', `last_name` = '$last_name', `phone_number` = '$phone', `email_address` = '$email', `residence` = '$residence', `skills` = '$skills', `bio` = '$bio' WHERE id = '$id' ");
-    mysqli_stmt_execute($sql_update_profile) or die(mysqli_stmt_error($sql_update_profile));
-    setcookie('success', 'Profile updated successfully!', time() + 2);
-    header('location: ./profile.php');
+    $sql_query = mysqli_prepare($db_connection, "UPDATE users SET `skills` = '$skills', `bio` = '$bio' WHERE id = '$id' ");
+    mysqli_stmt_execute($sql_query) or die(mysqli_stmt_error($sql_query));
+    setcookie('success', 'Profile updated Successfully', time() + 2);
+    header('location: ./update_profile.php');
 }
 function account_verification($verification)
 {
@@ -170,7 +184,17 @@ function count_user_verification($verification): int
 {
     return mysqli_num_rows(fetch_user_verifications($verification));
 }
+function logout()
+{
+    session_start();
+    session_destroy();
+    header('location: ./login.php');
+}
+if (isset($_POST['logout_btn'])) logout();
 
+
+
+// Job Related Functions
 function add_job()
 {
     global $db_connection;
@@ -263,6 +287,9 @@ function count_users_jobs(): int
     return mysqli_num_rows(fetch_users_jobs());
 }
 
+
+
+// Job Application Related Functions
 function apply_for_job()
 {
     global $db_connection;
@@ -351,11 +378,3 @@ function update_user_profile()
     setcookie("success", "profile updated. Login!", time() + 2);
     header('location: ../../index.php');
 }
-function logout()
-{
-    session_start();
-    session_destroy();
-    header('location: ../../index.php');
-}
-if (isset($_POST["update_user_profile"])) update_user_profile();
-if (isset($_POST['logout_btn'])) logout();
