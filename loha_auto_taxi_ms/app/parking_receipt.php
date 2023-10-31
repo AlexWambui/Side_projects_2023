@@ -6,7 +6,7 @@ protect_page();
 <html lang="en">
 <head>
     <?php include_once "include/head_section.php" ?>
-    <title>LATS MS Receipt</title>
+    <title>LAT MS Receipt</title>
 </head>
 <body>
 <?php include_once "include/navbar.php" ?>
@@ -17,7 +17,7 @@ protect_page();
                 <?php foreach(this_vehicle() as $vehicle): ?>
                 <div class="receipt_wrapper">
                     <div class="header">
-                        <h1>Loha Auto Taxi Stand Management System</h1>
+                        <h1>Loha Auto Taxi Management System</h1>
                         <div class="header_details row justify-content-between">
                             <p class="col"><b>Date:</b> <?= date('d F, Y') ?></p>
                             <p class="col text-right"><b>Receipt id:</b> <?= 'LATS'.rand(1000, 5000) ?></p>
