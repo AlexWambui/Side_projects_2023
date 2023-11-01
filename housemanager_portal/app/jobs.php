@@ -15,7 +15,7 @@ if (isset($_POST['delete_job'])) delete_job();
 </head>
 <body>
 <?php include_once "include/navbar.php" ?>
-<main class="main_content Jobs_List">
+<!-- <main class="main_content Jobs_List">
     <div class="container-fluid text-dark">
         <div class="row justify-content-center pt-3">
             <div class="col">
@@ -352,7 +352,187 @@ if (isset($_POST['delete_job'])) delete_job();
             </div>
         </div>
     </div>
+</main> -->
+
+<main class="main_content Jobs_List">
+    <div class="container jobs">
+        <?= alert() ?>
+        <?php if($_SESSION['user_level'] == 1): ?>
+            <h4 class="text-center m-4">Available Jobs</h4>
+            <?php foreach(fetch_all_open_jobs() as $job): ?>
+                <div class="job border-bottom border-top pt-2 pb-2 row">
+                    <div class="col-9">
+                        <span class="text-secondary"><?= $job['first_name'] ?> <?= $job['last_name'] ?></span>
+                        <h5 class="mb-1"><?= $job['job_title'] ?></h5>
+                        <p class="m-0"><?= $job['job_description'] ?></p>
+                        <p class="m-0">
+                            <span class="icon icon-money"></span>
+                            Kshs. <b><?= $job['salary'] ?></b> /Month
+                        </p>
+                    </div>
+
+                    <div class="col-3 text-center align-item-center">
+                        <form action="./jobs.php" method="post">
+                            <input type="hidden" name="job_id"
+                                    value="<?= $job['job_id'] ?>">
+                            <button type="submit" class="btn btn-warning btn-sm"
+                                    name="apply_for_job"><span
+                                        class="icon-send2"></span> Apply
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+
+        <?php if($_SESSION['user_level'] == 2 || $_SESSION['user_level'] == 3):?>
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="row">
+                        <div class="col">
+                            <?php
+                            if ($_SESSION['user_level'] == 1) {
+                                echo "<h5>Available Jobs</h5>";
+                            } elseif ($_SESSION['user_level'] == 2) {
+                                echo "<h5>Jobs You Posted</h5>";
+                            } else {
+                                echo "<h5>Jobs</h5>";
+                            }
+                            ?>
+                        </div>
+
+                        <div class="col text-right">
+                            <div class="modal fade" id="modalAddPayment" tabindex="-1" role="dialog"
+                                    aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold">New Job</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left text-dark">
+                                            <form action="./jobs.php" method="post" autocomplete="off">
+                                                <div class="form-group">
+                                                    <label for="title">Job Title</label>
+                                                    <input type="text" name="title" id="title" class="form-control"
+                                                            placeholder="Job Title" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Job Description</label>
+                                                    <input type="text" name="description" id="description"
+                                                            class="form-control" placeholder="Job Description"
+                                                            required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="salary">Salary</label>
+                                                    <input type="number" name="salary" id="salary"
+                                                            class="form-control" placeholder="Salary" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Job Status</label>
+                                                    <select name="status" id="status" class="form-control">
+                                                        <option value="null">Select Job Status</option>
+                                                        <option value="open">Open</option>
+                                                        <option value="closed">Closed</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button type="submit" name="add_job" id="add_job"
+                                                    class="btn btn-primary">
+                                                Save
+                                            </button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="" class="btn btn-success btn-rounded text-right" data-toggle="modal" data-target="#modalAddPayment">New Job</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover table-bordered" id="data_table">
+                        <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Salary</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            foreach (fetch_all_jobs() as $job) {
+                                ?>
+                                <tr>
+                                    <td><?= $job['job_title'] ?></td>
+                                    <td><?= $job['job_description'] ?></td>
+                                    <td class="<?php if ($job['job_status'] == 'open') echo 'text-success'; elseif ($job['job_status'] == 'closed') echo 'text-danger' ?>"><?= $job['job_status'] ?></td>
+                                    <td><?= $job['salary'] ?></td>
+                                    <td>
+                                        <div class="action_buttons_wrapper">
+                                                <div class="action_button">
+                                                    <form action="./jobs.php" method="post">
+                                                        <input type="hidden" name="job_id"
+                                                                value="<?= $job['job_id'] ?>">
+                                                        <button type="submit" class="btn btn-success btn-sm"
+                                                                name="open_job"><span
+                                                                    class="icon-check-circle"></span>
+                                                            Open
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="action_button">
+                                                    <form action="./jobs.php" method="post">
+                                                        <input type="hidden" name="job_id"
+                                                                value="<?= $job['job_id'] ?>">
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                name="close_job"><span
+                                                                    class="icon-times-circle"></span>
+                                                            Close
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="action_button">
+                                                    <form action="update_job.php" method="post">
+                                                        <input type="hidden" name="job_id"
+                                                                value="<?= $job['job_id'] ?>">
+                                                        <button type="submit" class="btn btn-success btn-sm"
+                                                                name="edit"><span class="icon-pencil"></span> Edit
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="action_button">
+                                                    <form action="./jobs.php" method="post" onsubmit="return confirm('Are you sure you want to delete this Job Posting?');">
+                                                        <input type="hidden" name="delete_id"
+                                                                value="<?= $job['job_id'] ?>">
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                                name="delete_job"><span class="icon-trash"></span>
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </main>
+
 <?php include_once "include/transform_data_table.php" ?>
 </body>
 </html>
