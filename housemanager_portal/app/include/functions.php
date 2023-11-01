@@ -138,7 +138,7 @@ function update_basic_information()
     $sql_query = mysqli_prepare($db_connection, "UPDATE users SET `first_name` = '$first_name', `last_name` = '$last_name', `phone_number` = '$phone', `email_address` = '$email', `password` = '$password', `residence` = '$residence' WHERE id = '$id' ");
     mysqli_stmt_execute($sql_query) or die(mysqli_stmt_error($sql_query));
     setcookie('success', 'Profile updated successfully!', time() + 2);
-    logout();
+    header('location: ./login.php');
 }
 function update_profile()
 {
@@ -188,7 +188,7 @@ function logout()
 {
     session_start();
     session_destroy();
-    header('location: ./login.php');
+    header('location: ../../login.php');
 }
 if (isset($_POST['logout_btn'])) logout();
 

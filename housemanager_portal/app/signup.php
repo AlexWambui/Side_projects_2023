@@ -14,7 +14,7 @@ if (isset($_POST['signup_btn'])) signup_user();
         <div class="row justify-content-center">
             <div class="col-7 mt-3">
                 <div class="card text-dark">
-                    <div class="card-header bg-primary">
+                    <div class="card-header bg-info">
                         <h5 class="text-center text-white">Signup</h5>
                     </div>
                     <div class="card-body">
@@ -74,7 +74,7 @@ if (isset($_POST['signup_btn'])) signup_user();
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary account_btn" name="signup_btn">Signup</button>
+                                <button type="submit" class="btn btn-info account_btn" name="signup_btn">Signup</button>
                             </div>
                         </form>
                         <p class="text-center">Already have an account? <a href="login.php">Login</a></p>

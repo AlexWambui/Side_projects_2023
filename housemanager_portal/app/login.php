@@ -12,12 +12,10 @@ if (isset($_POST['login_btn'])) login();
 <main class="main_content">
     <div class="account_page Login">
         <div class="row container-fluid">
-            <div class="image col-8">
-                <img src="../assets/images/system_images/househelp.jpg" alt="">
-            </div>
-            <div class="login_form col-4 justify-content-center">
+            <div class="image col-7"></div>
+            <div class="login_form col-5 justify-content-center">
                 <div class="card text-dark">
-                    <div class="card-header bg-primary">
+                    <div class="card-header bg-info">
                         <h5 class="text-center text-white">Login</h5>
                     </div>
                     <?= alert() ?>
@@ -32,7 +30,7 @@ if (isset($_POST['login_btn'])) login();
                                 <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info account_btn" name="login_btn">Login</button>
+                                <button type="submit" class="btn btn-info btn-block account_btn" name="login_btn">Login</button>
                             </div>
                         </form>
                         <p class="text-center">Don't have an account? <a href="signup.php">Signup</a></p>
